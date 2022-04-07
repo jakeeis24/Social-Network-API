@@ -39,7 +39,29 @@ module.exports = {
       });
   },
   //PUT update a thought
+
+  updateThought: async (req, res) => {
+    const updatedTht = await Thought.findOneAndUpdate(
+      { _id: req.params.thoughtId },
+      { thoughtText: req.body.thoughtText }
+    );
+    if (updatedTht) {
+      res.status(200).json(updatedTht);
+    } else {
+      res.status(500).json("Error, check logs");
+    }
+  },
   //DELETE remove a thought
+  deleteThought: async (req, res) => {
+    const deletedTht = await Thought.findOneAndDelete({
+      _id: req.params.thoughtId,
+    });
+    if (deletedTht) {
+      res.status(200).json(deletedTht, "Thought deleted!");
+    } else {
+      res.status(500).json("something went wrong");
+    }
+  },
   //POST create a reaction stored in arr in thought
   //DELETE remove reaction by id
 };
