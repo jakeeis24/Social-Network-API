@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const Thought = require("../models/Thought");
-const res = require("express/lib/response");
+
 module.exports = {
   //GET all users
   getUsers(req, res) {
