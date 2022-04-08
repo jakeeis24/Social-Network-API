@@ -66,5 +66,20 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   //POST create a reaction stored in arr in thought
+  createReaction(req, res) {
+    Thought.updateOne(
+      {
+        _id: req.params.thoughtId,
+      },
+      { $addToSet: { reactions: req.body } },
+      { new: true }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "No thought with this id." })
+          : res.json(thought)
+      )
+      .catch((err) => res.status(500).json(err));
+  },
   //DELETE remove reaction by id
 };
