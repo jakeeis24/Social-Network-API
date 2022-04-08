@@ -43,7 +43,11 @@ module.exports = {
   updateThought: async (req, res) => {
     const updatedTht = await Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { thoughtText: req.body.thoughtText }
+      { thoughtText: req.body.thoughtText },
+      {
+        runValidators: true,
+        new: true,
+      }
     );
     if (updatedTht) {
       res.status(200).json(updatedTht);
@@ -52,15 +56,14 @@ module.exports = {
     }
   },
   //DELETE remove a thought
-  deleteThought: async (req, res) => {
-    const deletedTht = await Thought.findOneAndDelete({
-      _id: req.params.thoughtId,
-    });
-    if (deletedTht) {
-      res.status(200).json(deletedTht, "Thought deleted!");
-    } else {
-      res.status(500).json("something went wrong");
-    }
+  deleteThought(req, res) {
+    Thought.findOneAndDelete({ _id: req.params.thoughtId })
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "No thought with that ID" })
+          : res.status(200).json({ message: "thought deleted!!!!!!" })
+      )
+      .catch((err) => res.status(500).json(err));
   },
   //POST create a reaction stored in arr in thought
   //DELETE remove reaction by id
