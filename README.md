@@ -25,7 +25,7 @@ This walkthrough video details how to invoke the server and test the routes usin
 
 # Installation
 
-Clone the repo and run npm i to install all dependencies.
+Clone the repo and run <code>npm i</code> to install all dependencies.
 
 # Usage
 
